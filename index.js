@@ -1,8 +1,14 @@
 import express from "express"
+import consign from "consign"
 
 const PORT = 3000
 const app = express()
 
-app.get("/", (req, res) => res.json({ status: "NTask API" }))
+app.set("json spaces", 4)
 
-app.listen(PORT, () => console.log(`NTask API - porta ${PORT}`))
+consign()
+    .include("models")
+    .then("libs/middlewares.js")
+    .then("routes")
+    .then("libs/boot.js")
+    .into(app)
